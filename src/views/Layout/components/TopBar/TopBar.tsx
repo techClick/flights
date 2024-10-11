@@ -3,7 +3,7 @@ import * as S from './TopBar.styled';
 
 const TopBar = function TopBar() {
   return (
-    <S.Container />
+    <S.Container>Assessment</S.Container>
   );
 };
 

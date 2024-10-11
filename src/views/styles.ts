@@ -1,2 +1,1 @@
-export const topBarColor = '#1685ec';
-export const topBarHeight = '30px';
+export const topBarHeight = '50px';
