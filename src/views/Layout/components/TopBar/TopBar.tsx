@@ -3,7 +3,7 @@ import * as S from './TopBar.styled';
 
 const TopBar = function TopBar() {
   return (
-    <S.Container>Assessment</S.Container>
+    <S.Container>Ikechi Anya - Assessment</S.Container>
   );
 };
 

@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import viewsReducer from '../views/redux';
+import appReducer from '../views/HomePage/redux';
 
 export const store = configureStore({
   reducer: {
-    views: viewsReducer,
+    app: appReducer,
   },
 });
 

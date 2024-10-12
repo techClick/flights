@@ -1,1 +1,1 @@
-export const topBarHeight = '50px';
+export const topBarHeight = '70px';
