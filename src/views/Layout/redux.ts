@@ -2,18 +2,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../redux/store';
 
 export interface LayoutState {
-  fetchProgress: string,
+  fetchProgress: 'fetching' | 'fetched',
 }
 
 const initialState: LayoutState = {
-  fetchProgress: '25%',
+  fetchProgress: 'fetched',
 };
 
 export const counterSlice = createSlice({
   name: 'layout',
   initialState,
   reducers: {
-    setFetchProgress: (state, action: PayloadAction<string>) => {
+    setFetchProgress: (state, action: PayloadAction<'fetching' | 'fetched'>) => {
       state.fetchProgress = action.payload;
     },
   },

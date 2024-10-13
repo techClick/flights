@@ -23,7 +23,7 @@ const HomePage = function HomePage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setFetchProgress('0%'));
+    dispatch(setFetchProgress('fetched'));
   }, []);
 
   const onClickExplore = () => {

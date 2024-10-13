@@ -11,8 +11,10 @@ const Layout = function Layout({ children } : { children: JSX.Element }) {
 
   return (
     <S.Container>
-      <TopBar />
-      { fetchProgress !== '0%' && fetchProgress !== '100%' && <FetchProgress fetchProgress={fetchProgress} /> }
+      <S.TopContainer>
+        <TopBar />
+        <FetchProgress fetchProgress={fetchProgress} />
+      </S.TopContainer>
       <S.BottomContainer>
         {children}
       </S.BottomContainer>
