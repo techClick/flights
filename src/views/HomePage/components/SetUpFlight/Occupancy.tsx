@@ -12,8 +12,8 @@ import NumberSelect from './NumberSelect';
 const Occupancy = function Occupancy() {
   const occupancies = useAppSelector(selectOccupancies);
   const [previousOccupancies, setPreviousOccupancies] = useState(occupancies);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [openTime, setOpenTime] = useState<number>(+new Date());
+  const [isOpen, setIsOpen] = useState(false);
+  const [openTime, setOpenTime] = useState(+new Date());
 
   const adults = occupancies.find((occ) => occ.name === 'Adults')?.count || 1;
   const infantsOnLap = occupancies.find((occ) => occ.info === 'On lap')?.count || 0;

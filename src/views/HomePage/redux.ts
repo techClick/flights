@@ -15,7 +15,7 @@ type OccupancyInfo = typeof occupancyInfo[number];
 export type OccupancyType = {
   name: OccupancyName,
   info: OccupancyInfo,
-  count: number
+  count: number,
 }
 
 export const defaultOccupancies: OccupancyType[] = [{
@@ -40,12 +40,14 @@ export interface ViewsState {
   tripType: Trip,
   flightClass: FlightClass,
   occupancies: typeof defaultOccupancies,
+  location: string,
 }
 
 const initialState: ViewsState = {
   tripType: 'Round trip',
   flightClass: 'Economy',
   occupancies: defaultOccupancies,
+  location: '',
 };
 
 export const counterSlice = createSlice({
@@ -61,15 +63,19 @@ export const counterSlice = createSlice({
     setOccupancies: (state, action: PayloadAction<typeof defaultOccupancies>) => {
       state.occupancies = action.payload;
     },
+    setLocation: (state, action: PayloadAction<string>) => {
+      state.location = action.payload;
+    },
   },
 });
 
 export const {
-  setTripType, setFlightClass, setOccupancies,
+  setTripType, setFlightClass, setOccupancies, setLocation,
 } = counterSlice.actions;
 
 export const selectTripType = (state: RootState) => state.app.tripType;
 export const selectFlightClass = (state: RootState) => state.app.flightClass;
 export const selectOccupancies = (state: RootState) => state.app.occupancies;
+export const selectLocation = (state: RootState) => state.app.location;
 
 export default counterSlice.reducer;
