@@ -15,7 +15,7 @@ import * as S from './SetUpFlight.styled';
 import SelectOptions from './SelectOptions';
 import Occupancy from './Occupancy';
 import Dates from './Dates';
-import Destinations from './Destinations';
+import Destinations from './Destinations/Destinations';
 
 const SetUpFlight = function SetUpFlight() {
   const tripType = useAppSelector(selectTripType);

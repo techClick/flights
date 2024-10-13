@@ -71,8 +71,8 @@ const Destinations = function Destinations() {
 
   return (
     <S.Container>
-      <ClickAwayListener onClickAway={onClickAway}>
-        <S.InputCont>
+      <S.InputCont>
+        <ClickAwayListener onClickAway={onClickAway}>
           {/* <S.DynamicCont isOpen={isOpen}> */}
           <Autocomplete
             open={isOpen}
@@ -111,7 +111,7 @@ const Destinations = function Destinations() {
             renderInput={(params) => (
               <TextField
                 {...params}
-                fullWidth
+                placeholder="Where from?"
                 sx={{
                   width: isOpen ? '90vw' : '100%',
                   maxWidth: isOpen ? '450px' : '100%',
@@ -136,8 +136,8 @@ const Destinations = function Destinations() {
             // isOptionEqualToValue={(l, v) => l.label === v.label}
           />
           {/* </S.DynamicCont> */}
-        </S.InputCont>
-      </ClickAwayListener>
+        </ClickAwayListener>
+      </S.InputCont>
     </S.Container>
   );
 };
