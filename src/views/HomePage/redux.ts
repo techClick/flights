@@ -36,18 +36,28 @@ export const defaultOccupancies: OccupancyType[] = [{
   count: 0,
 }];
 
+export type Location = {
+  id: string,
+  name: string,
+  country: string,
+  admin1: string,
+  lat: string,
+  lon: string,
+  pop: string
+}
+
 export interface ViewsState {
   tripType: Trip,
   flightClass: FlightClass,
   occupancies: typeof defaultOccupancies,
-  location: string,
+  location: Location | null,
 }
 
 const initialState: ViewsState = {
   tripType: 'Round trip',
   flightClass: 'Economy',
   occupancies: defaultOccupancies,
-  location: '',
+  location: null,
 };
 
 export const counterSlice = createSlice({
@@ -63,7 +73,7 @@ export const counterSlice = createSlice({
     setOccupancies: (state, action: PayloadAction<typeof defaultOccupancies>) => {
       state.occupancies = action.payload;
     },
-    setLocation: (state, action: PayloadAction<string>) => {
+    setLocation: (state, action: PayloadAction<Location>) => {
       state.location = action.payload;
     },
   },
