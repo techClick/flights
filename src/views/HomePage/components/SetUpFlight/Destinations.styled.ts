@@ -11,12 +11,6 @@ export const InputCont = styled.div`
   min-height: 60px;
 `;
 
-export const DynamicCont = styled.div<{ isOpen: boolean }>`
-  width: ${({ isOpen }) => isOpen ? '200%' : '100%'};
-  max-width: ${({ isOpen }) => isOpen ? '450px' : '100%'},
-  position: ${({ isOpen }) => isOpen ? 'absolute' : 'relative'}
-`;
-
 export const City = styled.div`
   display: flex;
   gap: 10px;

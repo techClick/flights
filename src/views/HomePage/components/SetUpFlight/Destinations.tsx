@@ -43,11 +43,6 @@ const Destinations = function Destinations() {
     }
   };
 
-  const commonSx = {
-    width: isOpen ? '200%' : '100%',
-    maxWidth: isOpen ? '450px' : '100%',
-  };
-
   const PopperComponent = (props: any) => (
     <Popper
       {...props}
@@ -60,7 +55,10 @@ const Destinations = function Destinations() {
           },
         },
       ]}
-      sx={{ ...commonSx }}
+      sx={{
+        width: '95vw !important',
+        maxWidth: '450px',
+      }}
       placement="bottom-start"
     />
   );
@@ -75,6 +73,7 @@ const Destinations = function Destinations() {
     <S.Container>
       <ClickAwayListener onClickAway={onClickAway}>
         <S.InputCont>
+          {/* <S.DynamicCont isOpen={isOpen}> */}
           <Autocomplete
             open={isOpen}
             forcePopupIcon={false}
@@ -86,12 +85,11 @@ const Destinations = function Destinations() {
             slots={{
               popper: PopperComponent,
             }}
+            sx={{
+              display: 'flex',
+            }}
             id="combo-box-demo"
             options={citiesOptions}
-            sx={{
-              ...commonSx,
-              position: isOpen ? 'absolute' : 'relative',
-            }}
             onChange={(e, value: any) => {
               setSelectedCity(value?.value || '');
             }}
@@ -99,7 +97,7 @@ const Destinations = function Destinations() {
             inputValue={selectedCity}
             renderOption={(props, option: any) => {
               return (
-                <Box>
+                <Box sx={{ display: 'flex' }}>
                   <S.City onClick={() => onClickCityOption(option.city)}>
                     <LocationIcon sx={{ color: '#70757a' }} />
                     <S.CityName>
@@ -114,6 +112,12 @@ const Destinations = function Destinations() {
               <TextField
                 {...params}
                 fullWidth
+                sx={{
+                  width: isOpen ? '90vw' : '100%',
+                  maxWidth: isOpen ? '450px' : '100%',
+                  position: isOpen ? 'absolute' : 'relative',
+                  display: 'flex',
+                }}
                 slotProps={{
                   input: {
                     ...params.InputProps,
@@ -131,6 +135,7 @@ const Destinations = function Destinations() {
             )}
             // isOptionEqualToValue={(l, v) => l.label === v.label}
           />
+          {/* </S.DynamicCont> */}
         </S.InputCont>
       </ClickAwayListener>
     </S.Container>
