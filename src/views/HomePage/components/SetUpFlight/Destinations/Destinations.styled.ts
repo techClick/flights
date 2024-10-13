@@ -2,34 +2,16 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
-  gap: 10x;
-  width: calc(50% - 5px);
+  gap: 8px;
+  width: calc(50% - 8px);
 `;
 
 export const InputCont = styled.div`
   width: calc(50% - 5px);
   min-height: 60px;
+  z-index: 2;
 `;
 
-export const City = styled.div`
-  display: flex;
-  gap: 10px;
-  width: 100%;
-  color: #242527;
-  padding: 5px 0px 5px 20px;
-  align-items: center;
-  padding-right: 20px;
-  cursor: default;
-  &:hover {
-    background: #f0f0f0;
-  }
-`;
-
-export const CityName = styled.div`
-`;
-
-export const CityInfo = styled.div`
-  color: grey;
-  font-size: 12px;
-  font-weight: 100;
+export const InputCont1 = styled(InputCont)`
+  z-index: 1;
 `;

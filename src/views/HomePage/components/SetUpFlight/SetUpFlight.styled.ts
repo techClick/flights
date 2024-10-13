@@ -16,5 +16,5 @@ export const Details = styled.div`
 
 export const DatesAndDestinations = styled.div`
   display: flex;
-  gap: 10x;
+  gap: 16x;
 `;
