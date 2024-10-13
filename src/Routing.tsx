@@ -7,7 +7,7 @@ import {
 import Loader from './views/Loader/Loader';
 
 const HomePage = lazy(() => import('./views/HomePage/HomePage'));
-const App = lazy(() => import('./views/App/App'));
+const ExploreResults = lazy(() => import('./views/ExploreResults/ExploreResults'));
 const Layout = lazy(() => import('./views/Layout/Layout'));
 
 const Routing = function Routing() {
@@ -19,8 +19,8 @@ const Routing = function Routing() {
             <Route exact path="/">
               <HomePage />
             </Route>
-            <Route exact path="/app">
-              <App />
+            <Route exact path="/explore">
+              <ExploreResults />
             </Route>
           </Switch>
         </Layout>

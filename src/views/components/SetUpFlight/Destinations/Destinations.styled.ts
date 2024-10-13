@@ -3,7 +3,8 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   gap: 8px;
-  width: calc(50% - 8px);
+  width: calc(60% - 8px);
+  z-index: 2;
 `;
 
 export const InputCont = styled.div`

@@ -1,13 +1,62 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import Search from '@mui/icons-material/Search';
+import { useAppSelector } from 'redux/hooks';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { setFetchProgress } from 'views/Layout/redux';
 import * as S from './HomePage.styled';
-import TopPart from './components/TopPart/TopPart';
-import SetUpFlight from './components/SetUpFlight/SetUpFlight';
+import TopPart from './TopPart/TopPart';
+import SetUpFlight from '../components/SetUpFlight/SetUpFlight';
+import {
+  selectDeparture, selectDestination, selectLocation,
+  selectReturnDate,
+} from './redux';
 
 const HomePage = function HomePage() {
+  const location = useAppSelector(selectLocation);
+  const destination = useAppSelector(selectDestination);
+  const departure = useAppSelector(selectDeparture);
+  const returnDate = useAppSelector(selectReturnDate);
+
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setFetchProgress('0%'));
+  }, []);
+
+  const onClickExplore = () => {
+    if (!location) {
+      toast('Location is needed', { type: 'warning' });
+      return;
+    }
+    if (!destination) {
+      toast('Destination is needed', { type: 'warning' });
+      return;
+    }
+    if (!departure) {
+      toast('Departure date is needed', { type: 'warning' });
+      return;
+    }
+    if (!returnDate) {
+      toast('Return date is needed', { type: 'warning' });
+      return;
+    }
+
+    history.push('/explore');
+  };
+
   return (
     <S.Container>
       <TopPart />
-      <SetUpFlight />
+      <S.Container2>
+        <SetUpFlight />
+      </S.Container2>
+      <S.Button onClick={onClickExplore}>
+        <Search />
+        Explore
+      </S.Button>
     </S.Container>
   );
 };

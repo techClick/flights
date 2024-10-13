@@ -14,7 +14,7 @@ const Location = () => {
   const destination = useAppSelector(selectDestination);
   const [isOpen, setIsOpen] = useState(false);
   const [openTime, setOpenTime] = useState(+new Date());
-  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCity, setSelectedCity] = useState(location?.name || '');
 
   const dispatch = useDispatch();
 

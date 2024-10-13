@@ -6,17 +6,15 @@ export const Container = styled.div`
   height: ${topBarHeight};
   width: 100%;
   display: block;
-  padding: 15px;
+  padding: 25px;
   border-bottom: 1px solid lightgrey;
-  -moz-box-sizing: border-box; 
-  -webkit-box-sizing: border-box; 
-  box-sizing: border-box;
-  position: relative;
   z-index: 2;
   font-size: 18px;
   font-weight: 600;
   display: flex;
   align-items: center;
+  position: sticky;
+  top: 0;
 `;
 
 export const Menu = styled.div`

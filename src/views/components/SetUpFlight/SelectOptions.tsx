@@ -44,6 +44,7 @@ const SelectOptions = function SelectOptions(
         }}
         sx={{
           boxShadow: 'none',
+          minHeight: 0,
           '&:hover': { backgroundColor: '#f0f0f0' },
           '.MuiOutlinedInput-notchedOutline': { border: 0 },
         }}

@@ -14,7 +14,7 @@ import { Box, SelectChangeEvent } from '@mui/material';
 import * as S from './SetUpFlight.styled';
 import SelectOptions from './SelectOptions';
 import Occupancy from './Occupancy';
-import Dates from './Dates';
+import Dates from './Dates/Dates';
 import Destinations from './Destinations/Destinations';
 
 const SetUpFlight = function SetUpFlight() {
