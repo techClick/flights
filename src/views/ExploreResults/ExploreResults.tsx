@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { setFetchProgress } from 'views/Layout/redux';
 import SetUpFlight from 'views/components/SetUpFlight/SetUpFlight';
@@ -27,6 +27,7 @@ const ExploreResults = () => {
   const occupancies = useAppSelector(selectOccupancies);
   const cabinClass = useAppSelector(selectCabinClass);
   const [fetchTimeout, setFetchTimeout] = useState<any>(null);
+  const activeAPICall = useRef(0);
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -49,14 +50,17 @@ const ExploreResults = () => {
     });
   };
 
-  const fetchFlights = async (): Promise<'success' | 'Api limit' | 'devEnv' | 'no dates' | 'others'
-  | 'no location' | 'no destination'> => {
+  const fetchFlights = async (): Promise<['success' | 'Api limit' | 'devEnv' | 'no dates' | 'others'
+  | 'no location' | 'no destination', number]> => {
+    const apiCount = activeAPICall.current;
+
     if (!location || !destination || !departure || (tripType === 'Round trip' && !returnDate)) {
-      return 'others';
+      return ['others', apiCount];
     }
 
     if (process.env.REACT_APP_ENVIRONMENT !== 'production') {
-      return 'devEnv';
+      await new Promise((resolve) => { setTimeout(resolve, 3000); });
+      return ['devEnv', apiCount];
     }
 
     const res = await callEndpoint({
@@ -64,14 +68,14 @@ const ExploreResults = () => {
     });
 
     if (res.status !== 200 || !JSON.parse(res.data).status) {
-      return 'Api limit';
+      return ['Api limit', apiCount];
     }
     const res1 = await callEndpoint({
       api: `/api/v1/flights/searchAirport?query=${encodeURIComponent(destination?.name)}&locale=en-US`,
     });
 
     if (res1.status !== 200 || !JSON.parse(res1.data).status) {
-      return 'Api limit';
+      return ['Api limit', apiCount];
     }
 
     const locationInfoSource = JSON.parse(res.data);
@@ -90,11 +94,11 @@ const ExploreResults = () => {
 
     // console.log(locationInfo, destinationInfo, res.data, res1.data, location, destination);
     if (!locationInfo) {
-      return 'no location';
+      return ['no location', apiCount];
     }
 
     if (!destinationInfo) {
-      return 'no destination';
+      return ['no destination', apiCount];
     }
 
     let offset = departure.getTimezoneOffset();
@@ -115,11 +119,11 @@ const ExploreResults = () => {
     const res2 = await callEndpoint({ api });
 
     if (res2.status !== 200 || !JSON.parse(res2.data).status) {
-      return 'Api limit';
+      return ['Api limit', apiCount];
     }
 
     if (!JSON.parse(res2.data).data?.itineraries?.length) {
-      return 'no dates';
+      return ['no dates', apiCount];
     }
 
     const flightsInfo: FlightsInfo = {
@@ -131,7 +135,7 @@ const ExploreResults = () => {
 
     dispatch(setFlightsInfo(flightsInfo));
 
-    return 'success';
+    return ['success', apiCount];
   };
 
   useEffect(() => {
@@ -144,8 +148,15 @@ const ExploreResults = () => {
     }
 
     setFetchTimeout(setTimeout(async () => {
-      const result = await fetchFlights();
+      activeAPICall.current += 1;
+      const fetchFlightResult = await fetchFlights();
+
+      if (fetchFlightResult[1] !== activeAPICall.current) {
+        return;
+      }
+
       dispatch(setFetchProgress('fetched'));
+      const result = fetchFlightResult[0];
 
       if (result === 'Api limit' || result === 'devEnv') {
         if (result === 'Api limit') {
