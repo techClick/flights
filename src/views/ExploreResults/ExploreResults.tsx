@@ -99,7 +99,7 @@ const ExploreResults = () => {
     const returnDateFormat = new Date(+(returnDate || new Date()) - (offset * 60 * 1000))
       .toISOString().split('T')[0];
 
-    const api = `/api/v2/flights/searchFlights?originSkyId=${locationInfo.skyId}&date=${date}&${tripType === 'Round trip'
+    const api = `/api/v1/flights/searchFlights?originSkyId=${locationInfo.skyId}&date=${date}&${tripType === 'Round trip'
       && `returnDate=${returnDateFormat}&`}destinationSkyId=${destinationInfo
       .skyId}&originEntityId=${locationInfo.entityId}&destinationEntityId=${destinationInfo
       .entityId}&cabinClass=${cabinClass.split(' ').join('_').toLowerCase()}&adults=${occupancies.find((occ) => occ
@@ -144,7 +144,7 @@ const ExploreResults = () => {
 
       if (result === 'Api limit' || result === 'devEnv') {
         if (result === 'Api limit') {
-          toast('Air scraper 500/month API usage limit reached, showing mock results.', { type: 'warning' });
+          toast('Air scraper 500/month API usage limit may have reached, showing mock results.', { type: 'warning' });
         }
 
         const flightsInfo: FlightsInfo = {
@@ -154,7 +154,7 @@ const ExploreResults = () => {
 
         dispatch(setFlightsInfo(flightsInfo));
       } else if (result === 'no data') {
-        toast('No data found. Please refine your search', { type: 'warning' });
+        toast('No data found. Please try different locations or dates', { type: 'warning' });
       }
     }, 800));
   }, [location, destination, departure, returnDate, tripType, occupancies, cabinClass]);
