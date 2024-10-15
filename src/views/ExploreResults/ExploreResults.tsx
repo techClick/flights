@@ -150,7 +150,7 @@ const ExploreResults = () => {
       if (result === 'Api limit' || result === 'devEnv') {
         if (result === 'Api limit') {
           toast(
-            'Air scraper API error. 500/month API usage limit may have reached, showing mock results.',
+            'API error, please try again. showing mock results.',
             { type: 'warning' },
           );
         }
