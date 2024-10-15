@@ -5,9 +5,9 @@ import {
 import LocationIcon from '@mui/icons-material/LocationOn';
 import { LocationType } from 'views/HomePage/redux';
 import { useAppSelector } from 'redux/hooks';
-import { selectIsPopperOpen, setIsPopperOpen } from 'views/ExploreResults/redux';
 import { useDispatch } from 'react-redux';
 import * as S from './SelectLocation.styled';
+import { selectIsPopperOpen, setIsPopperOpen } from '../redux';
 
 const SelectLocation = ({
   onClickAway,
@@ -49,7 +49,7 @@ const SelectLocation = ({
         },
       ]}
       sx={{
-        width: '95vw !important',
+        width: 'calc(100vw - 70px) !important',
         maxWidth: '450px',
         boxShadow: isOpen ? '0 1px 3px 0 rgba(60, 64, 67, .3), 0 4px 8px 3px rgba(60, 64, 67, .15);'
           : 'none',
@@ -101,7 +101,7 @@ const SelectLocation = ({
             {...params}
             placeholder={placeHolder}
             sx={{
-              width: isOpen ? '90vw' : '100%',
+              width: isOpen ? 'calc(100vw - 70px)' : '100%',
               maxWidth: isOpen ? '450px' : '100%',
               position: isOpen ? 'absolute' : 'relative',
               display: 'flex',
@@ -114,7 +114,7 @@ const SelectLocation = ({
                 ...params.InputProps,
                 startAdornment: (
                   <InputAdornment position="start">
-                    {inputIcon}
+                    <S.Icon>{inputIcon}</S.Icon>
                   </InputAdornment>
                 ),
               },

@@ -6,7 +6,6 @@ import { InputAdornment } from '@mui/material';
 import ArrowLeft from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForward from '@mui/icons-material/ArrowForwardIos';
 import Calendar from '@mui/icons-material/CalendarMonthOutlined';
-import { setIsPopperOpen } from 'views/ExploreResults/redux';
 import { useAppSelector } from 'redux/hooks';
 import {
   setReturnDate, setDepature, selectDeparture, selectReturnDate,
@@ -15,6 +14,7 @@ import { isMinDay } from 'views/utils/utils';
 import { useDispatch } from 'react-redux';
 import * as S from './DateRange.styled';
 import CustomDatePicker from './CustomDatePicker';
+import { setIsPopperOpen } from '../redux';
 
 const DateRange = () => {
   const departure = useAppSelector(selectDeparture);
@@ -121,22 +121,24 @@ const DateRange = () => {
             InputProps: {
               startAdornment: (
                 <InputAdornment position="start">
-                  <Calendar />
+                  <S.Icon><Calendar /></S.Icon>
                 </InputAdornment>
               ),
               endAdornment: (
                 <InputAdornment position="start">
-                  <S.Arrows>
-                    <S.Arrow
-                      isDisabled={isStartArrowLeftDisabled}
-                      onClick={onClickStartArrowLeft}
-                    >
-                      <ArrowLeft sx={{ scale: '0.6' }} />
-                    </S.Arrow>
-                    <S.Arrow onClick={onClickStartArrowRight}>
-                      <ArrowForward sx={{ scale: '0.6' }} />
-                    </S.Arrow>
-                  </S.Arrows>
+                  <S.Icon1>
+                    <S.Arrows>
+                      <S.Arrow
+                        isDisabled={isStartArrowLeftDisabled}
+                        onClick={onClickStartArrowLeft}
+                      >
+                        <ArrowLeft sx={{ scale: '0.6' }} />
+                      </S.Arrow>
+                      <S.Arrow onClick={onClickStartArrowRight}>
+                        <ArrowForward sx={{ scale: '0.6' }} />
+                      </S.Arrow>
+                    </S.Arrows>
+                  </S.Icon1>
                 </InputAdornment>
               ),
             },
@@ -169,17 +171,19 @@ const DateRange = () => {
             InputProps: {
               endAdornment: (
                 <InputAdornment position="start">
-                  <S.Arrows>
-                    <S.Arrow
-                      isDisabled={isEndArrowLeftDisabled}
-                      onClick={onClickEndArrowLeft}
-                    >
-                      <ArrowLeft sx={{ scale: '0.6' }} />
-                    </S.Arrow>
-                    <S.Arrow onClick={onClickEndArrowRight}>
-                      <ArrowForward sx={{ scale: '0.6' }} />
-                    </S.Arrow>
-                  </S.Arrows>
+                  <S.Icon1>
+                    <S.Arrows>
+                      <S.Arrow
+                        isDisabled={isEndArrowLeftDisabled}
+                        onClick={onClickEndArrowLeft}
+                      >
+                        <ArrowLeft sx={{ scale: '0.6' }} />
+                      </S.Arrow>
+                      <S.Arrow onClick={onClickEndArrowRight}>
+                        <ArrowForward sx={{ scale: '0.6' }} />
+                      </S.Arrow>
+                    </S.Arrows>
+                  </S.Icon1>
                 </InputAdornment>
               ),
             },

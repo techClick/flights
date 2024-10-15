@@ -22,3 +22,13 @@ export const CityInfo = styled.div`
   font-size: 12px;
   font-weight: 100;
 `;
+
+export const Icon = styled.div`
+  margin-top: -1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media(max-width: 420px) {
+    display: none;
+  }
+`;

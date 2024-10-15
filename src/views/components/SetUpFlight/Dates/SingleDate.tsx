@@ -6,7 +6,6 @@ import { InputAdornment } from '@mui/material';
 import ArrowLeft from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForward from '@mui/icons-material/ArrowForwardIos';
 import Calendar from '@mui/icons-material/CalendarMonthOutlined';
-import { setIsPopperOpen } from 'views/ExploreResults/redux';
 import {
   setReturnDate, setDepature, selectReturnDate, selectDeparture,
 } from 'views/HomePage/redux';
@@ -15,6 +14,7 @@ import { isMinDay } from 'views/utils/utils';
 import { useDispatch } from 'react-redux';
 import * as S from './DateRange.styled';
 import CustomDatePicker from './CustomDatePicker';
+import { setIsPopperOpen } from '../redux';
 
 const SingleDate = () => {
   const departure = useAppSelector(selectDeparture);
@@ -69,22 +69,24 @@ const SingleDate = () => {
             InputProps: {
               startAdornment: (
                 <InputAdornment position="start">
-                  <Calendar />
+                  <S.Icon><Calendar /></S.Icon>
                 </InputAdornment>
               ),
               endAdornment: (
                 <InputAdornment position="start">
-                  <S.Arrows>
-                    <S.Arrow
-                      isDisabled={isArrowLeftDisabled}
-                      onClick={onClickArrowLeft}
-                    >
-                      <ArrowLeft sx={{ scale: '0.6' }} />
-                    </S.Arrow>
-                    <S.Arrow onClick={onClickArrowRight}>
-                      <ArrowForward sx={{ scale: '0.6' }} />
-                    </S.Arrow>
-                  </S.Arrows>
+                  <S.Icon1>
+                    <S.Arrows>
+                      <S.Arrow
+                        isDisabled={isArrowLeftDisabled}
+                        onClick={onClickArrowLeft}
+                      >
+                        <ArrowLeft sx={{ scale: '0.6' }} />
+                      </S.Arrow>
+                      <S.Arrow onClick={onClickArrowRight}>
+                        <ArrowForward sx={{ scale: '0.6' }} />
+                      </S.Arrow>
+                    </S.Arrows>
+                  </S.Icon1>
                 </InputAdornment>
               ),
             },

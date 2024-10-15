@@ -28,7 +28,6 @@ export type FlightsInfo = {
 
 export interface ResultsState {
   flightsInfo: FlightsInfo,
-  isPopperOpen: boolean,
 }
 
 export const defaultFlightsInfo = {
@@ -38,7 +37,6 @@ export const defaultFlightsInfo = {
 
 const initialState: ResultsState = {
   flightsInfo: defaultFlightsInfo,
-  isPopperOpen: false,
 };
 
 export const counterSlice = createSlice({
@@ -48,15 +46,11 @@ export const counterSlice = createSlice({
     setFlightsInfo: (state, action: PayloadAction<FlightsInfo>) => {
       state.flightsInfo = action.payload;
     },
-    setIsPopperOpen: (state, action: PayloadAction<boolean>) => {
-      state.isPopperOpen = action.payload;
-    },
   },
 });
 
-export const { setFlightsInfo, setIsPopperOpen } = counterSlice.actions;
+export const { setFlightsInfo } = counterSlice.actions;
 
 export const selectFlightsInfo = (state: RootState) => state.results.flightsInfo;
-export const selectIsPopperOpen = (state: RootState) => state.results.isPopperOpen;
 
 export default counterSlice.reducer;

@@ -1,4 +1,18 @@
 import styled from 'styled-components';
+import { Icon as Icon0 } from '../Destinations/SelectLocation.styled';
+
+export const Icon = styled(Icon0)`
+  margin-top: -2px;
+  @media(max-width: 400px) {
+    display: none;
+  }
+`;
+
+export const Icon1 = styled(Icon0)`
+  @media(max-width: 450px) {
+    display: none;
+  }
+`;
 
 export const Arrows = styled.div`
   display: flex;
