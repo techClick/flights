@@ -4,7 +4,7 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import Loader from './views/Loader/Loader';
+import Loader from './views/components/Loader/Loader';
 
 const HomePage = lazy(() => import('./views/HomePage/HomePage'));
 const ExploreResults = lazy(() => import('./views/ExploreResults/ExploreResults'));

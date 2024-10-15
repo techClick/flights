@@ -8,13 +8,13 @@ export const callEndpoint = async ({
   const options: any = {
     method: 'GET',
     headers: {
-      'x-rapidapi-key': '626c2ecbb4msh2afa9b2f0c322afp1cc17bjsn3058ea9a5b73',
-      'x-rapidapi-host': 'sky-scrapper.p.rapidapi.com',
+      'x-rapidapi-key': process.env.REACT_APP_RAPID_APIKEY,
+      'x-rapidapi-host': process.env.REACT_APP_APIHOST,
     },
   };
 
   try {
-    const url = 'https://sky-scrapper.p.rapidapi.com';
+    const url = process.env.REACT_APP_APIURL;
     // console.log('calling ..... ', `${url}${api}`);
     const response = await fetch(
       `${url}${api}`,

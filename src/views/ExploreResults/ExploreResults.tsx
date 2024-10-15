@@ -11,8 +11,6 @@ import {
 } from 'views/HomePage/redux';
 import { toast } from 'react-toastify';
 import { callEndpoint } from 'endPoint/endPoint';
-import mockLocation from 'views/utils/location.json';
-import mockDestination from 'views/utils/destination.json';
 import mockFlight from 'views/utils/flight.json';
 import * as S from './ExploreResults.styled';
 import {
@@ -51,51 +49,47 @@ const ExploreResults = () => {
     });
   };
 
-  const fetchFlights = async (): Promise<'success' | 'Api limit' | 'others'> => {
-    let locationInfoSource: Record<string, any> = {};
-    let destinationInfoSource: Record<string, any> = {};
-    let flightInfoSource: Record<string, any> = {};
-
+  const fetchFlights = async (): Promise<'success' | 'Api limit' | 'devEnv' | 'no data' | 'others'> => {
     if (!location || !destination || !departure || (tripType === 'Round trip' && !returnDate)) {
       return 'others';
     }
 
     if (process.env.REACT_APP_ENVIRONMENT !== 'production') {
-      locationInfoSource = mockLocation;
-      destinationInfoSource = mockDestination;
-    } else {
-      const res = await callEndpoint({
-        api: `/api/v1/flights/searchAirport?query=${location?.name}&locale=en-US`,
-      });
-
-      if (res.status !== 200 || !JSON.parse(res.data).status) {
-        return 'Api limit';
-      }
-      const res1 = await callEndpoint({
-        api: `/api/v1/flights/searchAirport?query=${destination?.name}&locale=en-US`,
-      });
-
-      if (res1.status !== 200 || !JSON.parse(res1.data).status) {
-        return 'Api limit';
-      }
-
-      locationInfoSource = JSON.parse(res.data);
-      destinationInfoSource = JSON.parse(res1.data);
+      return 'devEnv';
     }
+
+    const res = await callEndpoint({
+      api: `/api/v1/flights/searchAirport?query=${encodeURIComponent(location?.name)}&locale=en-US`,
+    });
+
+    if (res.status !== 200 || !JSON.parse(res.data).status) {
+      return 'Api limit';
+    }
+    const res1 = await callEndpoint({
+      api: `/api/v1/flights/searchAirport?query=${encodeURIComponent(destination?.name)}&locale=en-US`,
+    });
+
+    if (res1.status !== 200 || !JSON.parse(res1.data).status) {
+      return 'Api limit';
+    }
+
+    const locationInfoSource = JSON.parse(res.data);
+    const destinationInfoSource = JSON.parse(res1.data);
 
     const locationInfo0 = locationInfoSource.data?.find((
       entry: Record<string, Record<string, string>>,
     ) => entry.navigation.entityType === 'CITY');
-    const locationInfo = (locationInfo0 || (JSON.parse(localStorage.getItem('Loc') || '{}')
+    const locationInfo = (locationInfo0 || (locationInfoSource
       .data?.[0]))?.navigation?.relevantFlightParams;
     const destinationInfo0 = destinationInfoSource.data?.find((
       entry: Record<string, Record<string, string>>,
     ) => entry.navigation.entityType === 'CITY');
-    const destinationInfo = (destinationInfo0 || (JSON.parse(localStorage.getItem('Des') || '{}')
+    const destinationInfo = (destinationInfo0 || (destinationInfoSource
       .data?.[0]))?.navigation?.relevantFlightParams;
 
+    // console.log(locationInfo, destinationInfo, res.data, res1.data, location, destination);
     if (!locationInfo || !destinationInfo) {
-      return 'others';
+      return 'no data';
     }
 
     let offset = departure.getTimezoneOffset();
@@ -113,27 +107,22 @@ const ExploreResults = () => {
       .name === 'Children')?.count || 0}&infants=${occupancies.reduce((a, b) => a + (b.name === 'Infants' ? b
       .count : 0), 0)}&sortBy=best&currency=USD`;
 
-    if (process.env.REACT_APP_ENVIRONMENT !== 'production') {
-      flightInfoSource = mockFlight;
-    } else {
-      const res2 = await callEndpoint({ api });
+    const res2 = await callEndpoint({ api });
 
-      if (res2.status !== 200 || !JSON.parse(res2.data).status) {
-        return 'Api limit';
-      }
-
-      flightInfoSource = JSON.parse(res2.data);
+    if (res2.status !== 200 || !JSON.parse(res2.data).status) {
+      return 'Api limit';
     }
 
-    // console.log(flightInfoSource);
+    if (!JSON.parse(res2.data).data?.itineraries?.length) {
+      return 'no data';
+    }
 
     const flightsInfo: FlightsInfo = {
       isMock: false,
-      flights: getFlightsRaw(flightInfoSource.data.itineraries),
+      flights: getFlightsRaw(JSON.parse(res2.data).data.itineraries),
     };
 
-    // eslint-disable-next-line no-console
-    console.log(flightsInfo);
+    // console.log(flightsInfo);
 
     dispatch(setFlightsInfo(flightsInfo));
 
@@ -153,15 +142,19 @@ const ExploreResults = () => {
       const result = await fetchFlights();
       dispatch(setFetchProgress('fetched'));
 
-      if (result === 'Api limit') {
-        toast('Air scraper 500/month API usage limit reached, showing mock results.', { type: 'warning' });
+      if (result === 'Api limit' || result === 'devEnv') {
+        if (result === 'Api limit') {
+          toast('Air scraper 500/month API usage limit reached, showing mock results.', { type: 'warning' });
+        }
 
         const flightsInfo: FlightsInfo = {
           isMock: true,
-          flights: getFlightsRaw(mockFlight),
+          flights: getFlightsRaw(mockFlight.data.itineraries),
         };
 
         dispatch(setFlightsInfo(flightsInfo));
+      } else if (result === 'no data') {
+        toast('No data found. Please refine your search', { type: 'warning' });
       }
     }, 800));
   }, [location, destination, departure, returnDate, tripType, occupancies, cabinClass]);

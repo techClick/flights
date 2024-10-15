@@ -1,15 +1,17 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.div<{ isEmpty: boolean }>`
   border: 1px solid lightgrey;
   border-radius: 7px;
   margin-top: 20px;
+  border-bottom: ${({ isEmpty }) => isEmpty && 'none'};
 `;
 
-export const Flight = styled.div`
+export const Flight = styled.div<{ isLast: boolean }>`
   padding: 18px;
   display: flex;
   border-bottom: 1px solid lightgrey;
+  border-bottom: ${({ isLast }) => isLast && 'none'};
 `;
 
 export const Cell = styled.div`

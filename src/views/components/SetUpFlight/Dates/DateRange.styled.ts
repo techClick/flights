@@ -23,7 +23,7 @@ export const Arrow = styled.div<{ isDisabled?: boolean }>`
   color: ${({ isDisabled }) => isDisabled && 'lightgrey'};
   cursor: ${({ isDisabled }) => !isDisabled && 'pointer'};
   &:hover {
-    background: ${({ isDisabled }) => !isDisabled && '#f0f0f0'};
+    background: ${({ isDisabled }) => !isDisabled && '#f6f6f6'};
   }
 `;
 
