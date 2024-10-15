@@ -49,7 +49,8 @@ const ExploreResults = () => {
     });
   };
 
-  const fetchFlights = async (): Promise<'success' | 'Api limit' | 'devEnv' | 'no data' | 'others'> => {
+  const fetchFlights = async (): Promise<'success' | 'Api limit' | 'devEnv' | 'no dates' | 'others'
+  | 'no location' | 'no destination'> => {
     if (!location || !destination || !departure || (tripType === 'Round trip' && !returnDate)) {
       return 'others';
     }
@@ -88,8 +89,12 @@ const ExploreResults = () => {
       .data?.[0]))?.navigation?.relevantFlightParams;
 
     // console.log(locationInfo, destinationInfo, res.data, res1.data, location, destination);
-    if (!locationInfo || !destinationInfo) {
-      return 'no data';
+    if (!locationInfo) {
+      return 'no location';
+    }
+
+    if (!destinationInfo) {
+      return 'no destination';
     }
 
     let offset = departure.getTimezoneOffset();
@@ -114,7 +119,7 @@ const ExploreResults = () => {
     }
 
     if (!JSON.parse(res2.data).data?.itineraries?.length) {
-      return 'no data';
+      return 'no dates';
     }
 
     const flightsInfo: FlightsInfo = {
@@ -144,7 +149,10 @@ const ExploreResults = () => {
 
       if (result === 'Api limit' || result === 'devEnv') {
         if (result === 'Api limit') {
-          toast('Air scraper 500/month API usage limit may have reached, showing mock results.', { type: 'warning' });
+          toast(
+            'Air scraper API error. 500/month API usage limit may have reached, showing mock results.',
+            { type: 'warning' },
+          );
         }
 
         const flightsInfo: FlightsInfo = {
@@ -153,8 +161,18 @@ const ExploreResults = () => {
         };
 
         dispatch(setFlightsInfo(flightsInfo));
-      } else if (result === 'no data') {
-        toast('No data found. Please try different locations or dates', { type: 'warning' });
+      } else if (result === 'no dates') {
+        toast('No data found for the date period. Please try different dates', { type: 'warning', autoClose: 10000 });
+      } else if (result === 'no location') {
+        toast(
+          'No data found for the origin. Please try a different location of origin',
+          { type: 'warning', autoClose: 10000 },
+        );
+      } else if (result === 'no destination') {
+        toast(
+          'No data found for the destination. Please try different destination',
+          { type: 'warning', autoClose: 10000 },
+        );
       }
     }, 800));
   }, [location, destination, departure, returnDate, tripType, occupancies, cabinClass]);
