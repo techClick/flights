@@ -5,7 +5,7 @@ import SetUpFlight from 'views/components/SetUpFlight/SetUpFlight';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'redux/hooks';
 import {
-  selectDeparture, selectDestination, selectFlightClass,
+  selectDeparture, selectDestination, selectCabinClass,
   selectLocation, selectOccupancies, selectReturnDate,
   selectTripType,
 } from 'views/HomePage/redux';
@@ -27,7 +27,7 @@ const ExploreResults = () => {
   const returnDate = useAppSelector(selectReturnDate);
   const tripType = useAppSelector(selectTripType);
   const occupancies = useAppSelector(selectOccupancies);
-  const cabinClass = useAppSelector(selectFlightClass);
+  const cabinClass = useAppSelector(selectCabinClass);
   const [fetchTimeout, setFetchTimeout] = useState<any>(null);
 
   const history = useHistory();

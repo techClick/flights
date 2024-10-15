@@ -26,7 +26,7 @@ const CustomDatePicker = function CustomDatePicker({
 
   const onChangeLocal = (d: Dayjs | null) => {
     setIsOpen(false);
-    setTimeout(() => onChange?.(d), 60);
+    setTimeout(() => onChange?.(d), 100);
   };
 
   return (

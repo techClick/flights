@@ -3,6 +3,7 @@ import citiesData from 'views/utils/cities.json';
 import LocationIcon from '@mui/icons-material/LocationOn';
 import { useAppSelector } from 'redux/hooks';
 import { useDispatch } from 'react-redux';
+import { selectIsPopperOpen } from 'views/ExploreResults/redux';
 import { formatCity } from 'views/utils/utils';
 import {
   LocationType, selectDestination, selectLocation, setDestination,
@@ -12,7 +13,9 @@ import SelectLocation from './SelectLocation';
 const Destination = () => {
   const destination = useAppSelector(selectDestination);
   const location = useAppSelector(selectLocation);
-  const [isOpen, setIsOpen] = useState(false);
+  const isPopperOpen = useAppSelector(selectIsPopperOpen);
+  const [isOpen0, setIsOpen] = useState(false);
+  const isOpen = isOpen0 && isPopperOpen;
   const [openTime, setOpenTime] = useState(+new Date());
   const [selectedCity, setSelectedCity] = useState(destination?.name || '');
 

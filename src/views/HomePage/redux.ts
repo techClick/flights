@@ -4,8 +4,8 @@ import { RootState } from '../../redux/store';
 export const tripTypes = ['Round trip', 'One way'] as const;
 export type Trip = typeof tripTypes[number]
 
-export const flightClasses = ['Economy', 'Premium economy', 'Business', 'First'] as const;
-export type FlightClass = typeof flightClasses[number]
+export const cabinClasses = ['Economy', 'Premium economy', 'Business', 'First'] as const;
+export type CabinClass = typeof cabinClasses[number]
 
 const occupancyNames = ['Adults', 'Children', 'Infants'] as const;
 const occupancyInfo = ['adult', 'Aged 2-11', 'In seat', 'On lap'] as const;
@@ -48,7 +48,7 @@ export type LocationType = {
 
 export interface AppState {
   tripType: Trip,
-  flightClass: FlightClass,
+  cabinClass: CabinClass,
   occupancies: typeof defaultOccupancies,
   location: LocationType | null,
   destination: LocationType | null,
@@ -58,7 +58,7 @@ export interface AppState {
 
 const initialState: AppState = {
   tripType: 'Round trip',
-  flightClass: 'Economy',
+  cabinClass: 'Economy',
   occupancies: defaultOccupancies,
   location: null,
   destination: null,
@@ -73,34 +73,34 @@ export const counterSlice = createSlice({
     setTripType: (state, action: PayloadAction<Trip>) => {
       state.tripType = action.payload;
     },
-    setFlightClass: (state, action: PayloadAction<FlightClass>) => {
-      state.flightClass = action.payload;
+    setCabinClass: (state, action: PayloadAction<CabinClass>) => {
+      state.cabinClass = action.payload;
     },
     setOccupancies: (state, action: PayloadAction<typeof defaultOccupancies>) => {
       state.occupancies = action.payload;
     },
-    setLocation: (state, action: PayloadAction<LocationType>) => {
+    setLocation: (state, action: PayloadAction<LocationType | null>) => {
       state.location = action.payload;
     },
-    setDestination: (state, action: PayloadAction<LocationType>) => {
+    setDestination: (state, action: PayloadAction<LocationType | null>) => {
       state.destination = action.payload;
     },
-    setDepature: (state, action: PayloadAction<Date>) => {
+    setDepature: (state, action: PayloadAction<Date | null>) => {
       state.departure = action.payload;
     },
-    setReturnDate: (state, action: PayloadAction<Date>) => {
+    setReturnDate: (state, action: PayloadAction<Date | null>) => {
       state.returnDate = action.payload;
     },
   },
 });
 
 export const {
-  setTripType, setFlightClass, setOccupancies, setLocation, setDestination, setDepature,
+  setTripType, setCabinClass, setOccupancies, setLocation, setDestination, setDepature,
   setReturnDate,
 } = counterSlice.actions;
 
 export const selectTripType = (state: RootState) => state.app.tripType;
-export const selectFlightClass = (state: RootState) => state.app.flightClass;
+export const selectCabinClass = (state: RootState) => state.app.cabinClass;
 export const selectOccupancies = (state: RootState) => state.app.occupancies;
 export const selectLocation = (state: RootState) => state.app.location;
 export const selectDestination = (state: RootState) => state.app.destination;

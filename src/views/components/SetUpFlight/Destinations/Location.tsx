@@ -4,6 +4,7 @@ import Circle from '@mui/icons-material/TripOrigin';
 import { useAppSelector } from 'redux/hooks';
 import { useDispatch } from 'react-redux';
 import { formatCity } from 'views/utils/utils';
+import { selectIsPopperOpen } from 'views/ExploreResults/redux';
 import {
   LocationType, selectDestination, selectLocation, setLocation,
 } from 'views/HomePage/redux';
@@ -12,7 +13,9 @@ import SelectLocation from './SelectLocation';
 const Location = () => {
   const location = useAppSelector(selectLocation);
   const destination = useAppSelector(selectDestination);
-  const [isOpen, setIsOpen] = useState(false);
+  const isPopperOpen = useAppSelector(selectIsPopperOpen);
+  const [isOpen0, setIsOpen] = useState(false);
+  const isOpen = isOpen0 && isPopperOpen;
   const [openTime, setOpenTime] = useState(+new Date());
   const [selectedCity, setSelectedCity] = useState(location?.name || '');
 

@@ -13,7 +13,7 @@ const Flights = () => {
     <S.Container>
       {
         [...(flightsInfo.flights || [])]?.sort((a, b) => +a.price.replace(/\$|,/g, '') - +b.price.replace(/\$|,/g, ''))
-          .map((flight) => {
+          .map((flight, i) => {
             const { airports, price } = flight;
             const duration = +airports[airports.length - 1].arrival - +airports[0].depature;
             // console.log(duration / (60 * 60 * 1000), Math.floor(duration / (60 * 60 * 1000)));
@@ -47,7 +47,9 @@ const Flights = () => {
                   </S.Duration>
                 </S.StopsCell>
                 <S.PriceCell>
-                  <S.Time>{`USD ${price.replace('$', '')}`}</S.Time>
+                  <S.Time isFirst={i === 0 && (flightsInfo.flights?.length || 0) > 1}>
+                    {`USD ${price.replace('$', '')}`}
+                  </S.Time>
                   <S.AirportName>{ tripType.toLowerCase() }</S.AirportName>
                 </S.PriceCell>
               </S.Flight>

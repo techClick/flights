@@ -3,10 +3,10 @@ import Arrows from '@mui/icons-material/SyncAlt';
 import Check from '@mui/icons-material/Check';
 import { useAppSelector } from 'redux/hooks';
 import {
-  FlightClass,
-  flightClasses,
-  selectFlightClass,
-  selectTripType, setFlightClass, setTripType, Trip, tripTypes,
+  CabinClass,
+  cabinClasses,
+  selectCabinClass,
+  selectTripType, setCabinClass, setTripType, Trip, tripTypes,
 } from 'views/HomePage/redux';
 import { useDispatch } from 'react-redux';
 import MenuItem from '@mui/material/MenuItem';
@@ -19,7 +19,7 @@ import Destinations from './Destinations/Destinations';
 
 const SetUpFlight = function SetUpFlight() {
   const tripType = useAppSelector(selectTripType);
-  const flightClass = useAppSelector(selectFlightClass);
+  const cabinClass = useAppSelector(selectCabinClass);
   const dispatch = useDispatch();
 
   const tripMenuItems = tripTypes.map((tripT) => (
@@ -31,10 +31,10 @@ const SetUpFlight = function SetUpFlight() {
     </MenuItem>
   ));
 
-  const flightClassMenuItems = flightClasses.map((fClass) => (
+  const cabinClassMenuItems = cabinClasses.map((fClass) => (
     <MenuItem value={fClass}>
       <Box sx={{ display: 'flex', gap: '15px', margin: '10px 5px' }}>
-        <Check sx={{ visibility: fClass === flightClass ? 'visible' : 'hidden' }} />
+        <Check sx={{ visibility: fClass === cabinClass ? 'visible' : 'hidden' }} />
         {fClass}
       </Box>
     </MenuItem>
@@ -44,8 +44,8 @@ const SetUpFlight = function SetUpFlight() {
     dispatch(setTripType(event.target.value as Trip));
   };
 
-  const flightClassOnChange = (event: SelectChangeEvent) => {
-    dispatch(setFlightClass(event.target.value as FlightClass));
+  const cabinClassOnChange = (event: SelectChangeEvent) => {
+    dispatch(setCabinClass(event.target.value as CabinClass));
   };
 
   return (
@@ -59,9 +59,9 @@ const SetUpFlight = function SetUpFlight() {
         />
         <Occupancy />
         <SelectOptions
-          value={flightClass}
-          menuItems={flightClassMenuItems}
-          onChange={flightClassOnChange}
+          value={cabinClass}
+          menuItems={cabinClassMenuItems}
+          onChange={cabinClassOnChange}
         />
       </S.Details>
       <S.DatesAndDestinations>

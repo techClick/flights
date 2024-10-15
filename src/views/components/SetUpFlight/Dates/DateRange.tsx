@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -6,6 +6,7 @@ import { InputAdornment } from '@mui/material';
 import ArrowLeft from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForward from '@mui/icons-material/ArrowForwardIos';
 import Calendar from '@mui/icons-material/CalendarMonthOutlined';
+import { setIsPopperOpen } from 'views/ExploreResults/redux';
 import { useAppSelector } from 'redux/hooks';
 import {
   setReturnDate, setDepature, selectDeparture, selectReturnDate,
@@ -18,11 +19,19 @@ import CustomDatePicker from './CustomDatePicker';
 const DateRange = () => {
   const departure = useAppSelector(selectDeparture);
   const returnDate = useAppSelector(selectReturnDate);
-  const [startDate, setStartDate] = React.useState<Dayjs | null>(departure ? dayjs(departure)
+  const [startDate, setStartDate] = useState<Dayjs | null>(departure ? dayjs(departure)
     : null);
-  const [endDate, setEndDate] = React.useState<Dayjs | null>(returnDate ? dayjs(returnDate) : null);
+  const [endDate, setEndDate] = useState<Dayjs | null>(returnDate ? dayjs(returnDate) : null);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setEndDate(returnDate ? dayjs(returnDate) : null);
+  }, [returnDate]);
+
+  useEffect(() => {
+    setStartDate(departure ? dayjs(departure) : null);
+  }, [departure]);
 
   const isStartArrowLeftDisabled = isMinDay(startDate?.toDate() || new Date(), new Date());
   const isEndArrowLeftDisabled = !endDate || isMinDay(endDate.toDate(), startDate?.toDate()
@@ -31,6 +40,7 @@ const DateRange = () => {
   const onEndDateChange = (newDate: Dayjs | null) => {
     setEndDate(newDate);
     dispatch(setReturnDate(newDate?.toDate() || new Date()));
+    dispatch(setIsPopperOpen(false));
   };
 
   const onStartDateChange = (newDate: Dayjs | null) => {
@@ -39,6 +49,7 @@ const DateRange = () => {
     }
     setStartDate(newDate);
     dispatch(setDepature(newDate?.toDate() || new Date()));
+    dispatch(setIsPopperOpen(false));
   };
 
   const onClickStartArrowLeft = (e: React.MouseEvent<HTMLElement>) => {

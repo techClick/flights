@@ -6,6 +6,7 @@ import { InputAdornment } from '@mui/material';
 import ArrowLeft from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForward from '@mui/icons-material/ArrowForwardIos';
 import Calendar from '@mui/icons-material/CalendarMonthOutlined';
+import { setIsPopperOpen } from 'views/ExploreResults/redux';
 import {
   setReturnDate, setDepature, selectReturnDate, selectDeparture,
 } from 'views/HomePage/redux';
@@ -31,6 +32,7 @@ const SingleDate = () => {
     }
     setStartDate(newDate);
     dispatch(setDepature(newDate?.toDate() || new Date()));
+    dispatch(setIsPopperOpen(false));
   };
 
   const onClickArrowLeft = (e: React.MouseEvent<HTMLElement>) => {

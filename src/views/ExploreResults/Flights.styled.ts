@@ -29,9 +29,10 @@ export const TimeCell = styled(Cell)`
   width: 40%;
 `;
 
-export const Time = styled.div`
+export const Time = styled.div<{ isFirst?: boolean }>`
   letter-spacing: 0.2px;
   font-weight: 500;
+  color: ${({ isFirst }) => isFirst && 'green'};
 `;
 
 export const AirportName = styled.div`

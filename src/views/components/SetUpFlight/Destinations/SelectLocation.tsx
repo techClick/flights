@@ -4,6 +4,9 @@ import {
 } from '@mui/material';
 import LocationIcon from '@mui/icons-material/LocationOn';
 import { LocationType } from 'views/HomePage/redux';
+import { useAppSelector } from 'redux/hooks';
+import { selectIsPopperOpen, setIsPopperOpen } from 'views/ExploreResults/redux';
+import { useDispatch } from 'react-redux';
 import * as S from './SelectLocation.styled';
 
 const SelectLocation = ({
@@ -30,6 +33,9 @@ const SelectLocation = ({
   inputIcon: JSX.Element,
   placeHolder: string,
 }) => {
+  const isPopperOpen = useAppSelector(selectIsPopperOpen);
+  const dispatch = useDispatch();
+
   const PopperComponent = (props: any) => (
     <Popper
       {...props}
@@ -52,12 +58,17 @@ const SelectLocation = ({
     />
   );
 
+  const onOpenLocal = () => {
+    onOpen();
+    dispatch(setIsPopperOpen(true));
+  };
+
   return (
     <ClickAwayListener onClickAway={onClickAway}>
       <Autocomplete
-        open={isOpen}
+        open={isOpen && isPopperOpen}
         forcePopupIcon={false}
-        onOpen={onOpen}
+        onOpen={onOpenLocal}
         disablePortal
         slots={{
           popper: PopperComponent,

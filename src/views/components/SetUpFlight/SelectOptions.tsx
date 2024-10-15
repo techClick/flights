@@ -2,7 +2,6 @@ import React, { SyntheticEvent, useRef } from 'react';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import * as S from './SelectOptions.styled';
-import './styles.css';
 
 const SelectOptions = function SelectOptions(
   {
