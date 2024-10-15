@@ -126,14 +126,16 @@ const ExploreResults = () => {
       return ['no dates', apiCount];
     }
 
-    const flightsInfo: FlightsInfo = {
-      isMock: false,
-      flights: getFlightsRaw(JSON.parse(res2.data).data.itineraries),
-    };
+    if (apiCount !== activeAPICall.current) {
+      const flightsInfo: FlightsInfo = {
+        isMock: false,
+        flights: getFlightsRaw(JSON.parse(res2.data).data.itineraries),
+      };
 
-    // console.log(flightsInfo);
+      // console.log(flightsInfo);
 
-    dispatch(setFlightsInfo(flightsInfo));
+      dispatch(setFlightsInfo(flightsInfo));
+    }
 
     return ['success', apiCount];
   };
