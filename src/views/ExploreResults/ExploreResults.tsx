@@ -59,7 +59,7 @@ const ExploreResults = () => {
     }
 
     if (process.env.REACT_APP_ENVIRONMENT !== 'production') {
-      await new Promise((resolve) => { setTimeout(resolve, 3000); });
+      // await new Promise((resolve) => { setTimeout(resolve, 3000); });
       return ['devEnv', apiCount];
     }
 
