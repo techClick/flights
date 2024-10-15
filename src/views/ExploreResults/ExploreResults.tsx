@@ -126,7 +126,7 @@ const ExploreResults = () => {
       return ['no dates', apiCount];
     }
 
-    if (apiCount !== activeAPICall.current) {
+    if (apiCount === activeAPICall.current) {
       const flightsInfo: FlightsInfo = {
         isMock: false,
         flights: getFlightsRaw(JSON.parse(res2.data).data.itineraries),
