@@ -13,9 +13,9 @@ const FetchProgress = ({ fetchProgress } : { fetchProgress: string }) => {
 
       const windowMax = (windowWidth || 0) * (66 / 100);
       setBarTranslate(newBarTranslate);
-      if (newBarTranslate > (windowMax - 5)) {
+      if (newBarTranslate > (windowMax - 20)) {
         setMovement('left');
-      } else if (newBarTranslate <= 0) {
+      } else if (newBarTranslate <= 5) {
         setMovement('right');
       }
     }, 2);

@@ -3,6 +3,29 @@ import { LocationType } from 'views/HomePage/redux';
 
 export const formatCity = (city: LocationType) => `${city.name}, ${city.admin1}. ${city.country}`;
 
+export const convertTime = (time: Date) => {
+  const getTime = (date: Date) => {
+    return `${date.getHours() < 10 ? '0' : ''}${date.getHours()}:${date.getMinutes() < 10 ? '0' : ''
+    }${date.getMinutes()}`;
+  };
+
+  const parts = getTime(time).split(':');
+  let suffix = ' AM';
+  if (Number(parts[0]) >= 12) {
+    suffix = ' PM';
+    if (Number(parts[0]) > 12) {
+      parts[0] = (Number(parts[0]) - 12).toString();
+    }
+  }
+  if (parts[0].length < 2) {
+    parts[0] = `0${parts[0]}`;
+  }
+  if (parts[1].length < 2) {
+    parts[1] = `0${parts[1]}`;
+  }
+  return `${parts.join(':')}${suffix}`;
+};
+
 export const convertDate = (date: Date | undefined) => {
   if (!date) return '';
 

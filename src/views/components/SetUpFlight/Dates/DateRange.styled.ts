@@ -7,12 +7,11 @@ export const Arrows = styled.div`
   position: absolute;
   right: 2px;
   top: 0;
-  height: 100%;
+  height: calc(100% - 3px);
+  margin-top: 1px;
   max-width: max-content;
   z-index: 2;
   background: white;
-  border-top: 1px solid lightgrey;
-  border-bottom: 1px solid lightgrey;
 `;
 
 export const Arrow = styled.div<{ isDisabled?: boolean }>`

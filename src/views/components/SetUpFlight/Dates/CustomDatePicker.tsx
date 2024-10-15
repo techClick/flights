@@ -24,11 +24,16 @@ const CustomDatePicker = function CustomDatePicker({
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
+  const onChangeLocal = (d: Dayjs | null) => {
+    setIsOpen(false);
+    setTimeout(() => onChange?.(d), 60);
+  };
+
   return (
     <DatePicker
       open={isOpen}
       value={value}
-      onChange={onChange}
+      onChange={onChangeLocal}
       minDate={minDate}
       disableOpenPicker
       sx={{ width: '100%', ...customSx }}

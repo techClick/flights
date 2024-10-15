@@ -11,6 +11,7 @@ import SetUpFlight from '../components/SetUpFlight/SetUpFlight';
 import {
   selectDeparture, selectDestination, selectLocation,
   selectReturnDate,
+  selectTripType,
 } from './redux';
 
 const HomePage = function HomePage() {
@@ -18,6 +19,7 @@ const HomePage = function HomePage() {
   const destination = useAppSelector(selectDestination);
   const departure = useAppSelector(selectDeparture);
   const returnDate = useAppSelector(selectReturnDate);
+  const tripType = useAppSelector(selectTripType);
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -39,7 +41,7 @@ const HomePage = function HomePage() {
       toast('Departure date is needed', { type: 'warning' });
       return;
     }
-    if (!returnDate) {
+    if (tripType === 'Round trip' && !returnDate) {
       toast('Return date is needed', { type: 'warning' });
       return;
     }

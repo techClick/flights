@@ -46,7 +46,7 @@ export type LocationType = {
   pop: string
 }
 
-export interface ViewsState {
+export interface AppState {
   tripType: Trip,
   flightClass: FlightClass,
   occupancies: typeof defaultOccupancies,
@@ -56,7 +56,7 @@ export interface ViewsState {
   returnDate: Date | null,
 }
 
-const initialState: ViewsState = {
+const initialState: AppState = {
   tripType: 'Round trip',
   flightClass: 'Economy',
   occupancies: defaultOccupancies,

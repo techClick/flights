@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   gap: 8px;
-  width: calc(60% - 8px);
+  flex: 1 0;
   z-index: 2;
 `;
 

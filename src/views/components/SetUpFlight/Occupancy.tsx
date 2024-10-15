@@ -11,13 +11,13 @@ import NumberSelect from './NumberSelect';
 
 const Occupancy = function Occupancy() {
   const occupancies = useAppSelector(selectOccupancies);
-  const [previousOccupancies, setPreviousOccupancies] = useState(occupancies);
+  const [tmpOccupancies, setTmpOccupancies] = useState(occupancies);
   const [isOpen, setIsOpen] = useState(false);
   const [openTime, setOpenTime] = useState(+new Date());
 
-  const adults = occupancies.find((occ) => occ.name === 'Adults')?.count || 1;
-  const infantsOnLap = occupancies.find((occ) => occ.info === 'On lap')?.count || 0;
-  const infantsInSeat = occupancies.find((occ) => occ.info === 'In seat')?.count || 0;
+  const adults = tmpOccupancies.find((occ) => occ.name === 'Adults')?.count || 1;
+  const infantsOnLap = tmpOccupancies.find((occ) => occ.info === 'On lap')?.count || 0;
+  const infantsInSeat = tmpOccupancies.find((occ) => occ.info === 'In seat')?.count || 0;
   const isInfantOnLapError = (occInfo: OccupancyType['info']) => (occInfo === 'On lap' || occInfo === 'adult')
     && infantsOnLap > adults;
   const isInfantInSeatError = (occInfo: OccupancyType['info']) => (occInfo === 'adult' || occInfo === 'In seat')
@@ -40,7 +40,6 @@ const Occupancy = function Occupancy() {
   const dispatch = useDispatch();
 
   const onClickCancel = () => {
-    dispatch(setOccupancies(previousOccupancies));
     setIsOpen(false);
   };
 
@@ -51,19 +50,19 @@ const Occupancy = function Occupancy() {
   };
 
   const onClickDone = () => {
-    setPreviousOccupancies(occupancies);
+    dispatch(setOccupancies(tmpOccupancies));
     setIsOpen(false);
   };
 
   return (
     <SelectOptions
       icon={<Person />}
-      value={previousOccupancies.reduce((a, b) => a + b.count, 0).toString()}
+      value={occupancies.reduce((a, b) => a + b.count, 0).toString()}
       menuItems={[(
         <ClickAwayListener onClickAway={onClickAway}>
           <Box sx={{ padding: '10px 20px' }}>
             {
-              occupancies.map((occ) => {
+              tmpOccupancies.map((occ) => {
                 const { info, name, count } = occ;
 
                 // console.log(info, isOccupancyError(info, count));
@@ -73,7 +72,11 @@ const Occupancy = function Occupancy() {
                       <S.Name isError={!!isOccupancyError(info, count)}>{name}</S.Name>
                       { info !== 'adult' && <S.Info isError={!!isOccupancyError(info, count)}>{info}</S.Info> }
                     </S.NamePart>
-                    <NumberSelect id={info} />
+                    <NumberSelect
+                      id={info}
+                      tmpOccupancies={tmpOccupancies}
+                      setTmpOccupancies={setTmpOccupancies}
+                    />
                   </S.Section>
                 );
               })

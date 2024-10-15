@@ -1,19 +1,20 @@
 import React from 'react';
 import Decrease from '@mui/icons-material/Remove';
 import Increase from '@mui/icons-material/Add';
-import { useAppSelector } from 'redux/hooks';
-import { selectOccupancies, setOccupancies } from 'views/HomePage/redux';
-import { useDispatch } from 'react-redux';
+import { OccupancyType } from 'views/HomePage/redux';
 import * as S from './NumberSelect.styled';
 
 const NumberSelect = function NumberSelect({
   id,
+  tmpOccupancies,
+  setTmpOccupancies,
 } : {
-  id: string
+  id: string,
+  tmpOccupancies: OccupancyType[],
+  // eslint-disable-next-line no-unused-vars
+  setTmpOccupancies: (o: OccupancyType[]) => void,
 }) {
-  const occupancies = useAppSelector(selectOccupancies);
-  const dispatch = useDispatch();
-  const thisOccupancy = occupancies.find((occ) => occ.info === id);
+  const thisOccupancy = tmpOccupancies.find((occ) => occ.info === id);
 
   if (!thisOccupancy) return null;
 
@@ -25,23 +26,23 @@ const NumberSelect = function NumberSelect({
   const onClickIncrease = () => {
     if (isIncreaseDisabled) return;
 
-    const newOccupancies = occupancies.map((occ) => {
+    const newOccupancies = tmpOccupancies.map((occ) => {
       if (occ.info === id) return { ...occ, count: occ.count + 1 };
       return occ;
     });
 
-    dispatch(setOccupancies(newOccupancies));
+    setTmpOccupancies(newOccupancies);
   };
 
   const onClickDecrease = () => {
     if (isDecreaseDisabled) return;
 
-    const newOccupancies = occupancies.map((occ) => {
+    const newOccupancies = tmpOccupancies.map((occ) => {
       if (occ.info === id) return { ...occ, count: occ.count - 1 };
       return occ;
     });
 
-    dispatch(setOccupancies(newOccupancies));
+    setTmpOccupancies(newOccupancies);
   };
 
   return (
