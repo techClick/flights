@@ -170,7 +170,7 @@ const ExploreResults = () => {
         );
       } else if (result === 'no destination') {
         toast(
-          'No data found for the destination. Please try different destination',
+          'No data found for the destination. Please try a different destination',
           { type: 'warning', autoClose: 10000 },
         );
       }
